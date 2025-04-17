@@ -218,7 +218,7 @@ const Result: FC<IResultProps> = ({
                 ...data,
                 status: NodeRunningStatus.Running,
                 expand: true,
-              } as any)
+              })
             }))
           },
           onIterationNext: () => {
@@ -237,7 +237,7 @@ const Result: FC<IResultProps> = ({
               draft.tracing[iterationsIndex] = {
                 ...data,
                 expand: !!data.error,
-              } as any
+              }
             }))
           },
           onLoopStart: ({ data }) => {
@@ -247,7 +247,7 @@ const Result: FC<IResultProps> = ({
                 ...data,
                 status: NodeRunningStatus.Running,
                 expand: true,
-              } as any)
+              })
             }))
           },
           onLoopNext: () => {
@@ -266,7 +266,7 @@ const Result: FC<IResultProps> = ({
               draft.tracing[loopsIndex] = {
                 ...data,
                 expand: !!data.error,
-              } as any
+              }
             }))
           },
           onNodeStarted: ({ data }) => {
@@ -282,7 +282,7 @@ const Result: FC<IResultProps> = ({
                 ...data,
                 status: NodeRunningStatus.Running,
                 expand: true,
-              } as any)
+              })
             }))
           },
           onNodeFinished: ({ data }) => {
@@ -302,7 +302,7 @@ const Result: FC<IResultProps> = ({
                     : {}),
                   ...data,
                   expand: !!data.error,
-                } as any
+                }
               }
             }))
           },
@@ -436,7 +436,7 @@ const Result: FC<IResultProps> = ({
       {!isCallBatchAPI && !isWorkflow && (
         (isResponding && !completionRes)
           ? (
-            <div className='flex h-full w-full justify-center items-center'>
+            <div className='flex h-full w-full items-center justify-center'>
               <Loading type='area' />
             </div>)
           : (
@@ -451,7 +451,7 @@ const Result: FC<IResultProps> = ({
       {!isCallBatchAPI && isWorkflow && (
         (isResponding && !workflowProcessData)
           ? (
-            <div className='flex h-full w-full justify-center items-center'>
+            <div className='flex h-full w-full items-center justify-center'>
               <Loading type='area' />
             </div>
           )

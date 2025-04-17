@@ -2,7 +2,6 @@ import type { FC } from 'react'
 import { memo } from 'react'
 import type { ChatItem } from '../../types'
 import { useChatContext } from '../context'
-import Button from '@/app/components/base/button'
 
 type SuggestedQuestionsProps = {
   item: ChatItem
@@ -11,6 +10,7 @@ const SuggestedQuestions: FC<SuggestedQuestionsProps> = ({
   item,
 }) => {
   const { onSend } = useChatContext()
+
   const {
     isOpeningStatement,
     suggestedQuestions,
@@ -22,14 +22,13 @@ const SuggestedQuestions: FC<SuggestedQuestionsProps> = ({
   return (
     <div className='flex flex-wrap'>
       {suggestedQuestions.filter(q => !!q && q.trim()).map((question, index) => (
-        <Button
+        <div
           key={index}
-          variant='secondary-accent'
-          className='mt-1 mr-1 max-w-full last:mr-0 shrink-0'
+          className='system-sm-medium mr-1 mt-1 inline-flex max-w-full shrink-0 cursor-pointer flex-wrap rounded-lg border-[0.5px] border-components-button-secondary-border bg-components-button-secondary-bg px-3.5 py-2 text-components-button-secondary-accent-text shadow-xs last:mr-0 hover:border-components-button-secondary-border-hover hover:bg-components-button-secondary-bg-hover'
           onClick={() => onSend?.(question)}
         >
           {question}
-        </Button>),
+        </div>),
       )}
     </div>
   )

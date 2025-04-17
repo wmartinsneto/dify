@@ -162,7 +162,14 @@ export const ANNOTATION_DEFAULT = {
   score_threshold: 0.9,
 }
 
-export const MAX_TOOLS_NUM = 10
+export let maxToolsNum = 10
+
+if (process.env.NEXT_PUBLIC_MAX_TOOLS_NUM && process.env.NEXT_PUBLIC_MAX_TOOLS_NUM !== '')
+  maxToolsNum = Number.parseInt(process.env.NEXT_PUBLIC_MAX_TOOLS_NUM)
+else if (globalThis.document?.body?.getAttribute('data-public-max-tools-num') && globalThis.document.body.getAttribute('data-public-max-tools-num') !== '')
+  maxToolsNum = Number.parseInt(globalThis.document.body.getAttribute('data-public-max-tools-num') as string)
+
+export const MAX_TOOLS_NUM = maxToolsNum
 
 export const DEFAULT_AGENT_SETTING = {
   enabled: false,
@@ -258,7 +265,7 @@ Thought: {{agent_scratchpad}}
   `,
 }
 
-export const VAR_REGEX = /\{\{(#[a-zA-Z0-9_-]{1,50}(\.[a-zA-Z_][a-zA-Z0-9_]{0,29}){1,10}#)\}\}/gi
+export const VAR_REGEX = /\{\{(#[a-zA-Z0-9_-]{1,50}(\.[a-zA-Z_]\w{0,29}){1,10}#)\}\}/gi
 
 export const resetReg = () => VAR_REGEX.lastIndex = 0
 
@@ -286,3 +293,24 @@ else if (globalThis.document?.body?.getAttribute('data-public-loop-node-max-coun
   loopNodeMaxCount = Number.parseInt(globalThis.document.body.getAttribute('data-public-loop-node-max-count') as string)
 
 export const LOOP_NODE_MAX_COUNT = loopNodeMaxCount
+
+let maxIterationsNum = 5
+
+if (process.env.NEXT_PUBLIC_MAX_ITERATIONS_NUM && process.env.NEXT_PUBLIC_MAX_ITERATIONS_NUM !== '')
+  maxIterationsNum = Number.parseInt(process.env.NEXT_PUBLIC_MAX_ITERATIONS_NUM)
+else if (globalThis.document?.body?.getAttribute('data-public-max-iterations-num') && globalThis.document.body.getAttribute('data-public-max-iterations-num') !== '')
+  maxIterationsNum = Number.parseInt(globalThis.document.body.getAttribute('data-public-max-iterations-num') as string)
+
+export const MAX_ITERATIONS_NUM = maxIterationsNum
+
+export const ENABLE_WEBSITE_JINAREADER = process.env.NEXT_PUBLIC_ENABLE_WEBSITE_JINAREADER !== undefined
+  ? process.env.NEXT_PUBLIC_ENABLE_WEBSITE_JINAREADER === 'true'
+  : true
+
+export const ENABLE_WEBSITE_FIRECRAWL = process.env.NEXT_PUBLIC_ENABLE_WEBSITE_FIRECRAWL !== undefined
+  ? process.env.NEXT_PUBLIC_ENABLE_WEBSITE_FIRECRAWL === 'true'
+  : true
+
+export const ENABLE_WEBSITE_WATERCRAWL = process.env.NEXT_PUBLIC_ENABLE_WEBSITE_WATERCRAWL !== undefined
+  ? process.env.NEXT_PUBLIC_ENABLE_WEBSITE_WATERCRAWL === 'true'
+  : true
