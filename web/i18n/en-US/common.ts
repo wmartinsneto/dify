@@ -56,6 +56,8 @@ const translation = {
     regenerate: 'Regenerate',
     submit: 'Submit',
     skip: 'Skip',
+    format: 'Format',
+    more: 'More',
   },
   errorMsg: {
     fieldRequired: '{{field}} is required',
@@ -474,7 +476,7 @@ const translation = {
   apiBasedExtension: {
     title: 'API extensions provide centralized API management, simplifying configuration for easy use across Dify\'s applications.',
     link: 'Learn how to develop your own API Extension.',
-    linkUrl: 'https://docs.dify.ai/features/extension/api_based_extension',
+    linkUrl: 'https://docs.dify.ai/en/guides/extension/api-based-extension/README',
     add: 'Add API Extension',
     selector: {
       title: 'API Extension',

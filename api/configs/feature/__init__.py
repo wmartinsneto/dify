@@ -12,7 +12,7 @@ from pydantic import (
 )
 from pydantic_settings import BaseSettings
 
-from configs.feature.hosted_service import HostedServiceConfig
+from .hosted_service import HostedServiceConfig
 
 
 class SecurityConfig(BaseSettings):
@@ -398,6 +398,11 @@ class InnerAPIConfig(BaseSettings):
         default=False,
     )
 
+    INNER_API_KEY: Optional[str] = Field(
+        description="API key for accessing the internal API",
+        default=None,
+    )
+
 
 class LoggingConfig(BaseSettings):
     """
@@ -517,6 +522,11 @@ class WorkflowNodeExecutionConfig(BaseSettings):
     MAX_SUBMIT_COUNT: PositiveInt = Field(
         description="Maximum number of submitted thread count in a ThreadPool for parallel node execution",
         default=100,
+    )
+
+    WORKFLOW_NODE_EXECUTION_STORAGE: str = Field(
+        default="rdbms",
+        description="Storage backend for WorkflowNodeExecution. Options: 'rdbms', 'hybrid'",
     )
 
 
