@@ -54,6 +54,10 @@ const translation = {
     in: 'में',
     copied: 'कॉपी किया गया',
     viewDetails: 'विवरण देखें',
+    more: 'अधिक',
+    downloadSuccess: 'डाउनलोड पूरा हुआ।',
+    downloadFailed: 'डाउनलोड विफल। कृपया बाद में पुनः प्रयास करें।',
+    format: 'फॉर्मेट',
   },
   errorMsg: {
     fieldRequired: '{{field}} आवश्यक है',
@@ -150,6 +154,8 @@ const translation = {
     newDataset: 'ज्ञान बनाएं',
     tools: 'उपकरण',
     exploreMarketplace: 'मार्केटप्लेस का अन्वेषण करें',
+    appDetail: 'ऐप विवरण',
+    account: 'खाता',
   },
   userProfile: {
     settings: 'सेटिंग्स',
@@ -162,6 +168,9 @@ const translation = {
     community: 'समुदाय',
     about: 'के बारे में',
     logout: 'लॉग आउट',
+    compliance: 'अनुपालन',
+    github: 'गिटहब',
+    support: 'समर्थन',
   },
   settings: {
     accountGroup: 'खाता',
@@ -212,6 +221,9 @@ const translation = {
     permanentlyDeleteButton: 'खाता स्थायी रूप से हटाएं',
     verificationPlaceholder: '6-अंकीय कोड पेस्ट करें',
     deleteSuccessTip: 'आपके खाते को हटाने का काम पूरा करने के लिए समय चाहिए. जब यह सब हो जाएगा तो हम आपको ईमेल करेंगे।',
+    workspaceIcon: 'कार्यस्थल आइकन',
+    editWorkspaceInfo: 'कार्यक्षेत्र की जानकारी संपादित करें',
+    workspaceName: 'कार्यस्थल का नाम',
   },
   members: {
     team: 'टीम',
@@ -565,6 +577,7 @@ const translation = {
     inputPlaceholder: 'बॉट से बात करें',
     thought: 'विचार',
     thinking: 'सोचते हुए...',
+    resend: 'फिर से भेजें',
   },
   promptEditor: {
     placeholder:
@@ -655,10 +668,31 @@ const translation = {
   license: {
     expiring: 'एक दिन में समाप्त हो रहा है',
     expiring_plural: '{{गिनती}} दिनों में समाप्त हो रहा है',
+    unlimited: 'असीमित',
   },
   pagination: {
     perPage: 'प्रति पृष्ठ आइटम',
   },
+  theme: {
+    light: 'रोशनी',
+    theme: 'थीम',
+    auto: 'प्रणाली',
+    dark: 'अंधेरा',
+  },
+  compliance: {
+    iso27001: 'आईएसओ 27001:2022 प्रमाणन',
+    gdpr: 'जीडीपीआर डीपीए',
+    soc2Type1: 'SOC 2 प्रकार I रिपोर्ट',
+    professionalUpgradeTooltip: 'केवल टीम योजना या उससे ऊपर के साथ उपलब्ध है।',
+    soc2Type2: 'SOC 2 प्रकार II रिपोर्ट',
+    sandboxUpgradeTooltip: 'केवल पेशेवर या टीम योजना के साथ उपलब्ध है।',
+  },
+  imageInput: {
+    supportedFormats: 'PNG, JPG, JPEG, WEBP और GIF का समर्थन करता है',
+    browse: 'ब्राउज़ करें',
+    dropImageHere: 'अपनी छवि यहाँ छोड़ें, या',
+  },
+  you: 'आप',
 }
 
 export default translation

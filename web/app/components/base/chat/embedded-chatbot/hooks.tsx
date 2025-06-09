@@ -36,6 +36,8 @@ import { InputVarType } from '@/app/components/workflow/types'
 import { TransferMethod } from '@/types/app'
 import { addFileInfos, sortAgentSorts } from '@/app/components/tools/utils'
 import { noop } from 'lodash-es'
+import { useGetUserCanAccessApp } from '@/service/access-control'
+import { useGlobalPublicStore } from '@/context/global-public-context'
 
 function getFormattedChatList(messages: any[]) {
   const newChatList: ChatItem[] = []
@@ -65,7 +67,13 @@ function getFormattedChatList(messages: any[]) {
 
 export const useEmbeddedChatbot = () => {
   const isInstalledApp = false
+  const systemFeatures = useGlobalPublicStore(s => s.systemFeatures)
   const { data: appInfo, isLoading: appInfoLoading, error: appInfoError } = useSWR('appInfo', fetchAppInfo)
+  const { isPending: isCheckingPermission, data: userCanAccessResult } = useGetUserCanAccessApp({
+    appId: appInfo?.app_id,
+    isInstalledApp,
+    enabled: systemFeatures.webapp_auth.enabled,
+  })
 
   const appData = useMemo(() => {
     return appInfo
@@ -221,6 +229,10 @@ export const useEmbeddedChatbot = () => {
     })
   }, [initInputs, appParams])
 
+  const allInputsHidden = useMemo(() => {
+    return inputsForms.length > 0 && inputsForms.every(item => item.hide === true)
+  }, [inputsForms])
+
   useEffect(() => {
     // init inputs from url params
     (async () => {
@@ -292,6 +304,9 @@ export const useEmbeddedChatbot = () => {
 
   const { notify } = useToastContext()
   const checkInputsRequired = useCallback((silent?: boolean) => {
+    if (allInputsHidden)
+      return true
+
     let hasEmptyInput = ''
     let fileIsUploading = false
     const requiredVars = inputsForms.filter(({ required }) => required)
@@ -327,7 +342,7 @@ export const useEmbeddedChatbot = () => {
     }
 
     return true
-  }, [inputsForms, notify, t])
+  }, [inputsForms, notify, t, allInputsHidden])
   const handleStartChat = useCallback((callback?: any) => {
     if (checkInputsRequired()) {
       setShowNewConversationItemInList(true)
@@ -364,7 +379,8 @@ export const useEmbeddedChatbot = () => {
 
   return {
     appInfoError,
-    appInfoLoading,
+    appInfoLoading: appInfoLoading || (systemFeatures.webapp_auth.enabled && isCheckingPermission),
+    userCanAccess: systemFeatures.webapp_auth.enabled ? userCanAccessResult?.result : true,
     isInstalledApp,
     allowResetChat,
     appId,
@@ -401,5 +417,6 @@ export const useEmbeddedChatbot = () => {
     setIsResponding,
     currentConversationInputs,
     setCurrentConversationInputs,
+    allInputsHidden,
   }
 }

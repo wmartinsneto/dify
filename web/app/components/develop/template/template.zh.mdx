@@ -15,7 +15,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
   ### 鉴权
 
 
-  Dify Service API 使用 `API-Key` 进行鉴权。
+  Service API 使用 `API-Key` 进行鉴权。
   <i>**强烈建议开发者把 `API-Key` 放在后端存储，而非分享或者放在客户端存储，以免 `API-Key` 泄露，导致财产损失。**</i>
   所有 API 请求都应在 **`Authorization`** HTTP Header 中包含您的 `API-Key`，如下所示：
 
@@ -60,7 +60,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
       <Property name='files' type='array[object]' key='files'>
           上传的文件。
           - `type` (string) 支持类型：图片 `image`（目前仅支持图片格式） 。
-          - `transfer_method` (string)  传递方式:
+          - `transfer_method` (string)  传递方式：
             - `remote_url`: 图片地址。
             - `local_file`: 上传文件。
           - `url` 图片地址。（仅当传递方式为 `remote_url` 时）。
@@ -226,7 +226,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Request" tag="POST" label="/files/upload" targetCode={`curl -X POST '${props.appDetail.api_base_url}/files/upload' \\\n--header 'Authorization: Bearer {api_key}' \\\n--form 'file=@localfile;type=image/[png|jpeg|jpg|webp|gif] \\\n--form 'user=abc-123'`}>
+    <CodeGroup title="Request" tag="POST" label="/files/upload" targetCode={`curl -X POST '${props.appDetail.api_base_url}/files/upload' \\\n--header 'Authorization: Bearer {api_key}' \\\n--form 'file=@localfile;type=image/[png|jpeg|jpg|webp|gif]' \\\n--form 'user=abc-123'`}>
 
     ```bash {{ title: 'cURL' }}
     curl -X POST '${props.appDetail.api_base_url}/files/upload' \
@@ -356,6 +356,68 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
 </Row>
 
 ---
+<Heading
+  url='/app/feedbacks'
+  method='GET'
+  title='Get feedbacks of application'
+  name='#app-feedbacks'
+/>
+<Row>
+  <Col>
+    Get application's feedbacks.
+
+    ### Query
+    <Properties>
+      <Property name='page' type='string' key='page'>
+       （optional）pagination，default：1
+      </Property>
+    </Properties>
+
+    <Properties>
+      <Property name='limit' type='string' key='limit'>
+       （optional） records per page default：20
+      </Property>
+    </Properties>
+
+    ### Response
+    - `data` (List) return apps feedback list.
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/app/feedbacks" targetCode={`curl -X GET '${props.appDetail.api_base_url}/app/feedbacks?page=1&limit=20'`}>
+
+    ```bash {{ title: 'cURL' }}
+    curl -X GET '${props.appDetail.api_base_url}/app/feedbacks?page=1&limit=20' \
+    --header 'Authorization: Bearer {api_key}' \
+    --header 'Content-Type: application/json'
+    ```
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+    ```json {{ title: 'Response' }}
+      {
+          "data": [
+              {
+                  "id": "8c0fbed8-e2f9-49ff-9f0e-15a35bdd0e25",
+                  "app_id": "f252d396-fe48-450e-94ec-e184218e7346",
+                  "conversation_id": "2397604b-9deb-430e-b285-4726e51fd62d",
+                  "message_id": "709c0b0f-0a96-4a4e-91a4-ec0889937b11",
+                  "rating": "like",
+                  "content": "message feedback information-3",
+                  "from_source": "user",
+                  "from_end_user_id": "74286412-9a1a-42c1-929c-01edb1d381d5",
+                  "from_account_id": null,
+                  "created_at": "2025-04-24T09:24:38",
+                  "updated_at": "2025-04-24T09:24:38"
+              }
+          ]
+      }
+    ```
+    </CodeGroup>
+  </Col>
+</Row>
+---
 
 <Heading
   url='/text-to-audio'
@@ -445,7 +507,6 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
     </CodeGroup>
   </Col>
 </Row>
-
 ---
 
 <Heading
@@ -549,6 +610,64 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
   </Col>
 </Row>
 ---
+
+<Heading
+  url='/site'
+  method='GET'
+  title='获取应用 WebApp 设置'
+  name='#site'
+/>
+<Row>
+  <Col>
+  用于获取应用的 WebApp 设置
+  ### Response
+  - `title` (string) WebApp 名称
+  - `chat_color_theme` (string) 聊天颜色主题，hex 格式
+  - `chat_color_theme_inverted` (bool) 聊天颜色主题是否反转
+  - `icon_type` (string) 图标类型，`emoji`-表情，`image`-图片
+  - `icon` (string) 图标，如果是 `emoji` 类型，则是 emoji 表情符号，如果是 `image` 类型，则是图片 URL
+  - `icon_background` (string) hex 格式的背景色
+  - `icon_url` (string) 图标 URL
+  - `description` (string) 描述
+  - `copyright` (string) 版权信息
+  - `privacy_policy` (string) 隐私政策链接
+  - `custom_disclaimer` (string) 自定义免责声明
+  - `default_language` (string) 默认语言
+  - `show_workflow_steps` (bool) 是否显示工作流详情
+  - `use_icon_as_answer_icon` (bool) 是否使用 WebApp 图标替换聊天中的 🤖
+  </Col>
+  <Col>
+  <CodeGroup title="Request" tag="POST" label="/meta" targetCode={`curl -X GET '${props.appDetail.api_base_url}/site' \\\n-H 'Authorization: Bearer {api_key}'`}>
+    ```bash {{ title: 'cURL' }}
+    curl -X GET '${props.appDetail.api_base_url}/site' \
+    -H 'Authorization: Bearer {api_key}'
+    ```
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+    ```json {{ title: 'Response' }}
+    {
+      "title": "My App",
+      "chat_color_theme": "#ff4a4a",
+      "chat_color_theme_inverted": false,
+      "icon_type": "emoji",
+      "icon": "😄",
+      "icon_background": "#FFEAD5",
+      "icon_url": null,
+      "description": "This is my app.",
+      "copyright": "all rights reserved",
+      "privacy_policy": "",
+      "custom_disclaimer": "All generated by AI",
+      "default_language": "en-US",
+      "show_workflow_steps": false,
+      "use_icon_as_answer_icon": false,
+    }
+    ```
+    </CodeGroup>
+  </Col>
+</Row>
+___
 
 <Heading
   url='/apps/annotations'
@@ -738,8 +857,8 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
     </CodeGroup>
 
     <CodeGroup title="Response">
-    ```json {{ title: 'Response' }}
-    {"result": "success"}
+    ```text {{ title: 'Response' }}
+    204 No Content
     ```
     </CodeGroup>
   </Col>
@@ -760,10 +879,10 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
         动作，只能是 'enable' 或 'disable'
       </Property>
       <Property name='embedding_provider_name' type='string' key='embedding_provider_name'>
-        指定的嵌入模型提供商, 必须先在系统内设定好接入的模型，对应的是provider字段
+        指定的嵌入模型提供商，必须先在系统内设定好接入的模型，对应的是 provider 字段
       </Property>
       <Property name='embedding_model_name' type='string' key='embedding_model_name'>
-        指定的嵌入模型，对应的是model字段
+        指定的嵌入模型，对应的是 model 字段
       </Property>
       <Property name='score_threshold' type='number' key='score_threshold'>
         相似度阈值，当相似度大于该阈值时，系统会自动回复，否则不回复
@@ -771,8 +890,8 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
     </Properties>
   </Col>
   <Col sticky>
-    嵌入模型的提供商和模型名称可以通过以下接口获取：v1/workspaces/current/models/model-types/text-embedding， 具体见：通过 API 维护知识库。 使用的Authorization是Dataset的API Token。
-    该接口是异步执行，所以会返回一个job_id，通过查询job状态接口可以获取到最终的执行结果。
+    嵌入模型的提供商和模型名称可以通过以下接口获取：v1/workspaces/current/models/model-types/text-embedding，具体见：通过 API 维护知识库。使用的 Authorization 是 Dataset 的 API Token。
+    该接口是异步执行，所以会返回一个 job_id，通过查询 job 状态接口可以获取到最终的执行结果。
     <CodeGroup
       title="Request"
       tag="POST"
